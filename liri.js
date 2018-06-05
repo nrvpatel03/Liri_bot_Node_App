@@ -5,6 +5,41 @@ var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
 var client = new Twitter(keys.twitter);
 var spotify = new Spotify(keys.spotify);
-console.log(client);
-console.log(spotify);
-// var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+// console.log(client);
+// console.log(spotify);
+function omdbReq(){
+    var movieTitleArr = [];
+    for(var i = 3; i<process.argv.length; i++){
+        if(process.argv[i]){
+            movieTitleArr.push(process.argv[i].trim());
+        }
+    }
+    var movieName = movieTitleArr.join("+");
+    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    request(queryUrl,function(error,response,body){
+        if(!error && response.statusCode === 200){
+            console.log("Title: " + JSON.parse(body).Title);
+            console.log("Year Released: " + JSON.parse(body).Year);
+            console.log("IMDB Rating: " + JSON.parse(body).Ratings[0].Value);
+            console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+            console.log("Country Produced: " + JSON.parse(body).Country);
+            console.log("Language of Movie: " + JSON.parse(body).Language);
+            console.log("Plot: " + JSON.parse(body).Plot);
+            console.log("Actors: " + JSON.parse(body).Actors);
+        }
+    })
+}
+switch(process.argv[2]){
+    case "movie-this":
+    omdbReq();
+    break;
+    case "my-tweets":
+    break;
+    case "spotify-this-song":
+    break;
+    case "do-what-it-says":
+    break;
+    default:
+    console.log("Please enter one of the commands below: ");
+    console.log("  my tweets \n ", "spotify-this-song <song name here> \n ", "movie-this <movie name here> \n ", "do-what-it-says ");
+}
