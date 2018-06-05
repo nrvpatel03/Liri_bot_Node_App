@@ -1,2 +1,10 @@
 require("dotenv").config();
-console.log(process.env.TWITTER_CONSUMER_KEY);
+var request = require("request");
+var keys = require("./keys.js");
+var Twitter = require('twitter');
+var Spotify = require('node-spotify-api');
+var client = new Twitter(keys.twitter);
+var spotify = new Spotify(keys.spotify);
+console.log(client);
+console.log(spotify);
+// var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
