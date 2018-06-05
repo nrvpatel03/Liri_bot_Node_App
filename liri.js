@@ -29,11 +29,35 @@ function omdbReq(){
         }
     })
 }
+
+function twitterReq(){
+    var params = {screen_name: 'nix1228_91'};
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {
+  if (!error) {
+    //   console.log(tweets[1]);
+    if(tweets.length<20){
+        for(var i = 0; i<tweets.length; i++){
+            console.log("============================================================================");
+            console.log("Tweet: " + tweets[i].text);
+            //format time???
+            console.log("Created at: " + tweets[i].created_at);
+        }
+    }else{
+        for(var i = 0; i<20;i++){
+            console.log(tweets[i].text);
+            console.log(tweets[i].created_at);
+        }
+    }
+  }
+});
+}
+
 switch(process.argv[2]){
     case "movie-this":
     omdbReq();
     break;
     case "my-tweets":
+    twitterReq();
     break;
     case "spotify-this-song":
     break;
