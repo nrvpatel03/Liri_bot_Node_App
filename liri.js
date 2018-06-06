@@ -43,13 +43,21 @@ function twitterReq(){
             console.log("Created at: " + tweets[i].created_at);
         }
     }else{
-        for(var i = 0; i<20;i++){
+        for(var i = 0; i<20; i++){
             console.log(tweets[i].text);
             console.log(tweets[i].created_at);
         }
     }
   }
 });
+}
+function spotifyReq(){
+    spotify.search({type: 'track',query: 'All the Small Things'},function(err,data){
+        if(err){
+            console.log(err);
+        }
+        console.log(data);
+    })
 }
 
 switch(process.argv[2]){
@@ -60,6 +68,7 @@ switch(process.argv[2]){
     twitterReq();
     break;
     case "spotify-this-song":
+    spotifyReq();
     break;
     case "do-what-it-says":
     break;
